@@ -1,0 +1,41 @@
+# Master uncompressed 4K video originals (> 100MB, exceeds GitHub limit)
+**/originals/
+temp_*
+*.mp4.bak
+
+# Root scratch video downloads & video frames
+/*.mp4
+/*.webm
+/frame_*
+/sample_*
+/new_logo_*
+/pexels_*
+/final_*
+/verify_*
+/screen_*
+/uploaded_vid_frame_*
+/agency_*
+/user_rec_*
+/test_*
+/hud_*
+/infographic_*
+/marketing_*
+/mixkit_*
+
+# Temporary scratch scripts & text dumps in root
+/apply_*.py
+/check_*.py
+/list_*.py
+/previous_*.py
+/restore_*.py
+/step*.py
+/line_*.txt
+
+# Python build cache & script backups
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.bak
+*.pre_*
+*.log
