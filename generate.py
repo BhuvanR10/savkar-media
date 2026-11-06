@@ -790,6 +790,8 @@ template = """<!DOCTYPE html>
             gap: 1.5rem;
             width: max-content;
             animation: marqueeSlide 40s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
         }
 
         .auto-slider-track:hover {
@@ -837,9 +839,7 @@ template = """<!DOCTYPE html>
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: rgba(10, 10, 15, 0.78);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(10, 10, 15, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
             display: flex;
@@ -3428,6 +3428,37 @@ template = """<!DOCTYPE html>
         }
 
         @media (max-width: 868px) {
+            /* Intro Overlay on Mobile */
+            #liquid-container {
+                padding: 1.5rem 1.25rem !important;
+            }
+            .intro-top-bar {
+                font-size: 0.65rem !important;
+                letter-spacing: 0.15em !important;
+            }
+            .intro-top-bar > div:nth-child(2) {
+                display: none !important;
+            }
+            .intro-brand-name {
+                gap: 0.5rem !important;
+                font-size: 0.72rem !important;
+            }
+            .intro-brand-name img {
+                width: 22px !important;
+                height: 22px !important;
+            }
+            .enter-experience-btn {
+                padding: 12px 24px !important;
+                font-size: 0.75rem !important;
+                letter-spacing: 0.18em !important;
+            }
+            .intro-instruction {
+                font-size: 0.56rem !important;
+                letter-spacing: 0.12em !important;
+                text-align: center;
+                padding: 0 10px;
+            }
+
             /* General Navigation & Section Spacing for Mobile Devices */
             .site-nav { padding: 0.9rem 1.25rem; }
             .site-nav-menu { display: none; }
@@ -4440,7 +4471,7 @@ template = """<!DOCTYPE html>
             <div class="auto-slider-track" id="slider-track">
                 <!-- Card 01: Jagannath Travels Reel -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4449,7 +4480,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 02: Kalpana Roadlines Volvo -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4458,7 +4489,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 03: Commercial Reel 1 -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4467,7 +4498,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 04: Commercial Reel 2 -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4476,7 +4507,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 05: Commercial Reel 3 -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4485,7 +4516,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 06: Commercial Reel 4 -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4494,7 +4525,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 07: Commercial Reel 5 -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4503,7 +4534,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 08: Commercial Reel 6 -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4512,7 +4543,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 09: Malnad Stays Long Weekend -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4522,7 +4553,7 @@ template = """<!DOCTYPE html>
                 <!-- Seamless Loop Set -->
                 <!-- Duplicate Card 01: Jagannath Travels Reel (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4531,7 +4562,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 02: Kalpana Roadlines Volvo (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4540,7 +4571,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 03: Commercial Reel 1 (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4549,7 +4580,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 04: Commercial Reel 2 (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4558,7 +4589,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 05: Commercial Reel 3 (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4567,7 +4598,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 06: Commercial Reel 4 (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4576,7 +4607,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 07: Commercial Reel 5 (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4585,7 +4616,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 08: Commercial Reel 6 (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4594,7 +4625,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 09: Malnad Stays Long Weekend (Seamless Loop) -->
                 <div class="work-card">
-                    <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" autoplay muted loop playsinline preload="metadata"></video>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -5710,24 +5741,51 @@ template = """<!DOCTYPE html>
             for (let i = 0; i < count; i++) {
                 bills.push(new DollarBill(Math.random() * width, -100 - Math.random() * 80, true));
             }
+            startCashLoop();
+        }
+
+        let cashAnimationRunning = false;
+        let cashRafId = null;
+
+        function startCashLoop() {
+            if (cashAnimationRunning) return;
+            cashAnimationRunning = true;
+            cashRafId = requestAnimationFrame(animateCash);
+        }
+
+        function stopCashLoop() {
+            cashAnimationRunning = false;
+            if (cashRafId) {
+                cancelAnimationFrame(cashRafId);
+                cashRafId = null;
+            }
+            ctx.clearRect(0, 0, width, height);
         }
 
         function animateCash() {
+            if (!cashAnimationRunning) return;
+
+            // When intro is done, cash rain toggle is OFF, and all temporary burst bills have expired:
+            if (!isIntroRaining && !isCashRainEnabled && bills.length === 0) {
+                stopCashLoop();
+                return;
+            }
+
             ctx.clearRect(0, 0, width, height);
-            if (isIntroRaining || isCashRainEnabled) {
-                for (let i = bills.length - 1; i >= 0; i--) {
-                    const alive = bills[i].update();
-                    if (!alive) {
-                        bills.splice(i, 1);
-                    } else {
-                        bills[i].draw();
-                    }
+            for (let i = bills.length - 1; i >= 0; i--) {
+                const alive = bills[i].update();
+                if (!alive) {
+                    bills.splice(i, 1);
+                } else {
+                    bills[i].draw();
                 }
             }
-            requestAnimationFrame(animateCash);
+
+            cashRafId = requestAnimationFrame(animateCash);
         }
+
         dollarImg.onload = () => {
-            animateCash();
+            startCashLoop();
         };
 
         // ==========================================
@@ -5747,12 +5805,13 @@ template = """<!DOCTYPE html>
                         bills.push(new DollarBill(Math.random() * width, -100 - Math.random() * 200));
                     }
                 }
+                startCashLoop();
             } else {
                 cashToggleBtn.classList.add('off');
                 cashStatusText.textContent = 'OFF';
                 cashCanvas.style.opacity = '0';
                 bills.length = 0;
-                ctx.clearRect(0, 0, width, height);
+                stopCashLoop();
             }
         }
 
@@ -5775,8 +5834,10 @@ template = """<!DOCTYPE html>
             antialias: true,
             powerPreference: 'high-performance'
         });
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        renderer.setPixelRatio(dpr);
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const textureLoader = new THREE.TextureLoader();
         const logoTexture = textureLoader.load('___LOGO_B64___');
@@ -5796,12 +5857,13 @@ template = """<!DOCTYPE html>
             uniform float u_time;
             uniform vec2 u_mouse;
             uniform vec2 u_resolution;
+            uniform float u_scale;
             uniform sampler2D u_texture;
             varying vec2 vUv;
 
             void main() {
-                vec2 st = (gl_FragCoord.xy * 2.0 - u_resolution) / min(u_resolution.x, u_resolution.y);
-                vec2 mouse = (u_mouse * 2.0 - u_resolution) / min(u_resolution.x, u_resolution.y);
+                vec2 st = (gl_FragCoord.xy * 2.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
+                vec2 mouse = (u_mouse * 2.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
 
                 float dist = length(st);
                 float mouseDist = length(st - mouse);
@@ -5810,7 +5872,7 @@ template = """<!DOCTYPE html>
                 float wave2 = cos(atan(st.y, st.x) * 4.0 + u_time * 1.4) * 0.018;
                 float mouseWave = exp(-mouseDist * 3.5) * sin(mouseDist * 22.0 - u_time * 5.0) * 0.04;
 
-                vec2 uv = (st / (1.0 + wave1 + wave2 + mouseWave)) * 0.5 + 0.5;
+                vec2 uv = ((st * u_scale) / (1.0 + wave1 + wave2 + mouseWave)) * 0.5 + 0.5;
 
                 if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
                     discard;
@@ -5825,10 +5887,13 @@ template = """<!DOCTYPE html>
             }
         `;
 
+        const getLiquidScale = () => (window.innerWidth <= 768 ? 1.35 : 1.12);
+
         const uniforms = {
             u_time: { value: 0 },
-            u_mouse: { value: new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2) },
-            u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+            u_mouse: { value: new THREE.Vector2(renderer.domElement.width / 2, renderer.domElement.height / 2) },
+            u_resolution: { value: new THREE.Vector2(renderer.domElement.width, renderer.domElement.height) },
+            u_scale: { value: getLiquidScale() },
             u_texture: { value: logoTexture }
         };
 
@@ -5843,16 +5908,21 @@ template = """<!DOCTYPE html>
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        let targetMouse = new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2);
+        let targetMouse = new THREE.Vector2(renderer.domElement.width / 2, renderer.domElement.height / 2);
         window.addEventListener('pointermove', (e) => {
-            targetMouse.x = e.clientX;
-            targetMouse.y = window.innerHeight - e.clientY;
+            const curDpr = renderer.getPixelRatio();
+            targetMouse.x = e.clientX * curDpr;
+            targetMouse.y = (window.innerHeight - e.clientY) * curDpr;
         });
 
-        window.addEventListener('resize', () => {
+        function resizeLiquid() {
+            const curDpr = Math.min(window.devicePixelRatio || 1, 2);
+            renderer.setPixelRatio(curDpr);
             renderer.setSize(window.innerWidth, window.innerHeight);
-            uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-        });
+            uniforms.u_resolution.value.set(renderer.domElement.width, renderer.domElement.height);
+            uniforms.u_scale.value = getLiquidScale();
+        }
+        window.addEventListener('resize', resizeLiquid);
 
         let shaderActive = true;
         let animationFrameId;
@@ -6342,7 +6412,7 @@ template = """<!DOCTYPE html>
             });
 
             // Intersection Observer to run loop only when visible
-            let isVisible = true;
+            let isVisible = false;
             const pricingSec = document.getElementById('pricing');
             if (pricingSec && 'IntersectionObserver' in window) {
                 const observer = new IntersectionObserver(entries => {
@@ -7381,7 +7451,7 @@ template = """<!DOCTYPE html>
             }
             window.addEventListener('resize', onResize, { passive: true });
 
-            let isVisible = true;
+            let isVisible = false;
             const aboutSec = document.getElementById('about');
             if (aboutSec && 'IntersectionObserver' in window) {
                 const obs = new IntersectionObserver(entries => {
@@ -7426,32 +7496,89 @@ template = """<!DOCTYPE html>
         })();
 
         // ==========================================
-        // SELECTED WORK AUTOPLAY & SOUND TOGGLE
+        // SELECTED WORK AUTOPLAY & SOUND TOGGLE (PERFORMANCE OPTIMIZED)
         // ==========================================
         (function() {
-            const workVideos = document.querySelectorAll('.work-video');
+            const workSection = document.getElementById('work');
+            const sliderTrack = document.getElementById('slider-track');
+            const workCards = Array.from(document.querySelectorAll('.work-card'));
+            const workVideos = Array.from(document.querySelectorAll('.work-video'));
             
-            // Autoplay enforcement
-            workVideos.forEach(v => {
-                v.muted = true;
-                const p = v.play();
-                if (p !== undefined) {
-                    p.catch(() => {
-                        const unlock = () => {
-                            v.play();
-                            window.removeEventListener('click', unlock);
-                            window.removeEventListener('touchstart', unlock);
-                            window.removeEventListener('scroll', unlock);
-                        };
-                        window.addEventListener('click', unlock, { once: true, passive: true });
-                        window.addEventListener('touchstart', unlock, { once: true, passive: true });
-                        window.addEventListener('scroll', unlock, { once: true, passive: true });
-                    });
+            let isWorkSectionVisible = false;
+
+            // Safe play/pause helpers to avoid uncaught promise rejections
+            function safePlay(v) {
+                if (v && v.paused) {
+                    const p = v.play();
+                    if (p !== undefined) {
+                        p.catch(() => {});
+                    }
+                }
+            }
+
+            function safePause(v) {
+                if (v && !v.paused) {
+                    v.pause();
+                }
+            }
+
+            // IntersectionObserver for the entire Selected Work section
+            // Pauses ALL videos and stops the marquee animation when off-screen!
+            if ('IntersectionObserver' in window && workSection) {
+                const sectionObserver = new IntersectionObserver((entries) => {
+                    const entry = entries[0];
+                    isWorkSectionVisible = entry.isIntersecting;
+                    if (isWorkSectionVisible) {
+                        if (sliderTrack) sliderTrack.style.animationPlayState = 'running';
+                        updateVisibleCardVideos();
+                    } else {
+                        if (sliderTrack) sliderTrack.style.animationPlayState = 'paused';
+                        workVideos.forEach(v => safePause(v));
+                    }
+                }, { threshold: 0.05 });
+                sectionObserver.observe(workSection);
+            }
+
+            // Only decode and play cards visible in the horizontal viewport
+            function updateVisibleCardVideos() {
+                if (!isWorkSectionVisible) return;
+                const vw = window.innerWidth;
+                workCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const vid = card.querySelector('.work-video');
+                    // Check if card is within or near the screen viewport
+                    if (rect.right > -80 && rect.left < vw + 80) {
+                        safePlay(vid);
+                    } else {
+                        safePause(vid);
+                    }
+                });
+            }
+
+            // Periodic lightweight check during marquee movement
+            let cardCheckTimer = null;
+            function startCardChecking() {
+                if (cardCheckTimer) return;
+                cardCheckTimer = setInterval(() => {
+                    if (isWorkSectionVisible) {
+                        updateVisibleCardVideos();
+                    }
+                }, 400);
+            }
+            startCardChecking();
+
+            // Handle background tab switching to save battery and GPU
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    if (sliderTrack) sliderTrack.style.animationPlayState = 'paused';
+                    workVideos.forEach(v => safePause(v));
+                } else if (isWorkSectionVisible) {
+                    if (sliderTrack) sliderTrack.style.animationPlayState = 'running';
+                    updateVisibleCardVideos();
                 }
             });
 
             // Card Sound Toggle
-            const workCards = document.querySelectorAll('.work-card');
             workCards.forEach(card => {
                 const vid = card.querySelector('.work-video');
                 const btn = card.querySelector('.work-sound-badge');
@@ -7477,6 +7604,7 @@ template = """<!DOCTYPE html>
                             }
                         });
                         vid.muted = false;
+                        safePlay(vid);
                         if (typeof window.pauseAllInstaReels === 'function') {
                             window.pauseAllInstaReels();
                         }
