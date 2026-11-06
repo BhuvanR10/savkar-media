@@ -2859,10 +2859,10 @@ template = """<!DOCTYPE html>
 
         /* Instagram Reel Lightbox Modal */
         .reel-lightbox-modal {
+            display: none;
             position: fixed;
             inset: 0;
             z-index: 10000;
-            display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -2873,6 +2873,7 @@ template = """<!DOCTYPE html>
         }
 
         .reel-lightbox-modal.is-active {
+            display: flex;
             opacity: 1;
             pointer-events: auto;
         }
@@ -6619,6 +6620,7 @@ template = """<!DOCTYPE html>
         // INSTAGRAM 4K REELS INTERACTIVE ENGINE
         // Single-video + audio playback, instant unmute on click,
         // previous video & audio auto-stop, and full-screen Lightbox
+        // Strictly protected against accidental playback during mobile scrolling
         // ==========================================
         (() => {
             const grid = document.getElementById('insta-reels-grid');
@@ -6670,7 +6672,18 @@ template = """<!DOCTYPE html>
             // Expose globally so Selected Work unmuting can pause Instagram reels
             window.pauseAllInstaReels = pauseAllGridVideos;
 
-            // Wire up each reel tile
+            // Auto-pause playing Instagram reels when scrolled out of view!
+            const instaSection = document.getElementById('instagram');
+            if ('IntersectionObserver' in window && instaSection) {
+                const instaObserver = new IntersectionObserver((entries) => {
+                    if (!entries[0].isIntersecting) {
+                        pauseAllGridVideos();
+                    }
+                }, { threshold: 0.05 });
+                instaObserver.observe(instaSection);
+            }
+
+            // Wire up each reel tile with scroll drag detection
             tiles.forEach((tile, idx) => {
                 const video = tile.querySelector('video');
                 const soundBtn = tile.querySelector('.reel-sound-btn');
@@ -6680,6 +6693,39 @@ template = """<!DOCTYPE html>
                 const progressBar = tile.querySelector('.reel-progress-bar');
                 const playSym = tile.querySelector('.play-symbol');
                 const pauseSym = tile.querySelector('.pause-symbol');
+
+                // Track touch movement to ensure scrolling NEVER triggers video playback or lightbox
+                let touchStartX = 0;
+                let touchStartY = 0;
+                let isDraggingOrScrolling = false;
+
+                tile.addEventListener('touchstart', (e) => {
+                    if (e.touches && e.touches.length > 0) {
+                        touchStartX = e.touches[0].clientX;
+                        touchStartY = e.touches[0].clientY;
+                        isDraggingOrScrolling = false;
+                    }
+                }, { passive: true });
+
+                tile.addEventListener('touchmove', (e) => {
+                    if (e.touches && e.touches.length > 0) {
+                        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+                        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+                        // Any finger movement > 6px means the user is scrolling the page!
+                        if (dx > 6 || dy > 6) {
+                            isDraggingOrScrolling = true;
+                        }
+                    }
+                }, { passive: true });
+
+                tile.addEventListener('touchend', () => {
+                    if (isDraggingOrScrolling) {
+                        // Keep scroll lock active for 250ms to swallow synthesized click events
+                        setTimeout(() => {
+                            isDraggingOrScrolling = false;
+                        }, 250);
+                    }
+                }, { passive: true });
 
                 function updateTileSoundUI(isUnmuted) {
                     if (soundBtn) soundBtn.classList.toggle('is-unmuted', isUnmuted);
@@ -6729,6 +6775,7 @@ template = """<!DOCTYPE html>
                 if (soundBtn) {
                     soundBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
+                        if (isDraggingOrScrolling) return; // Prevent sound toggle when scrolling
                         if (!video) return;
 
                         if (video.paused) {
@@ -6747,12 +6794,18 @@ template = """<!DOCTYPE html>
                 if (expandBtn) {
                     expandBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
+                        if (isDraggingOrScrolling) return; // Prevent modal popup when scrolling
                         openLightbox(idx);
                     });
                 }
 
-                // Main card click (play with audio / stop)
-                tile.addEventListener('click', () => {
+                // Main card click (play with audio / stop) - strictly protected against scrolling!
+                tile.addEventListener('click', (e) => {
+                    if (isDraggingOrScrolling) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return; // User was scrolling, DO NOT PLAY VIDEO!
+                    }
                     if (!video) return;
 
                     if (video.paused) {
