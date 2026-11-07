@@ -860,6 +860,699 @@ template = """<!DOCTYPE html>
         }
 
         /* ===================================================
+           SELECTED WORK VIEWER & HEADER CONTROLS
+        =================================================== */
+        .work-view-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.65rem 1.3rem;
+            background: rgba(168, 255, 83, 0.12);
+            border: 1px solid var(--accent-lime);
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-transform: uppercase;
+        }
+
+        .work-view-btn:hover {
+            background: var(--accent-lime);
+            color: #000000;
+            box-shadow: 0 0 24px rgba(168, 255, 83, 0.45);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        .work-count-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-lime);
+            color: #000000;
+            font-size: 0.72rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .work-view-btn:hover .work-count-badge {
+            background: #000000;
+            color: var(--accent-lime);
+        }
+
+        /* Work Card Hover View Overlay */
+        .work-card-view-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(6, 7, 10, 0.55);
+            backdrop-filter: blur(3px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 3;
+        }
+
+        .work-card:hover .work-card-view-overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .work-view-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 18px;
+            background: var(--accent-lime);
+            color: #000000;
+            border-radius: 100px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            box-shadow: 0 0 20px rgba(168, 255, 83, 0.6);
+            transform: translateY(6px);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .work-card:hover .work-view-pill {
+            transform: translateY(0);
+        }
+
+        /* Full Screen Selected Work Showcase Modal */
+        .work-viewer-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100005;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-sizing: border-box;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .work-viewer-modal.is-active {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .wv-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(4, 5, 8, 0.94);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .wv-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 960px;
+            height: 92vh;
+            max-height: 920px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(12, 13, 18, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 40px rgba(168, 255, 83, 0.15);
+            overflow: hidden;
+        }
+
+        .wv-topbar {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(8, 9, 13, 0.8);
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .wv-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .wv-tagline {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--accent-lime);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .wv-heading {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .wv-top-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .wv-speed-pills {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 6px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .wv-speed-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-right: 4px;
+            padding-left: 6px;
+        }
+
+        .wv-speed-btn {
+            background: transparent;
+            border: none;
+            color: #b0b0be;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .wv-speed-btn:hover {
+            color: #ffffff;
+        }
+
+        .wv-speed-btn.is-active {
+            background: var(--accent-lime);
+            color: #000000;
+            box-shadow: 0 0 10px rgba(168, 255, 83, 0.4);
+        }
+
+        .wv-close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .wv-close-btn:hover {
+            background: var(--accent-lime);
+            color: #000000;
+            border-color: var(--accent-lime);
+            transform: scale(1.08);
+        }
+
+        /* Center Video Stage */
+        .wv-stage {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            overflow: hidden;
+            padding: 1rem;
+        }
+
+        .wv-player-wrap {
+            position: relative;
+            height: 100%;
+            max-height: 520px;
+            aspect-ratio: 9/16;
+            background: #08090d;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(168, 255, 83, 0.2);
+            border: 1px solid rgba(168, 255, 83, 0.35);
+        }
+
+        .wv-video-element {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        .wv-center-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--accent-lime);
+            color: var(--accent-lime);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 4;
+        }
+
+        .wv-center-play.is-visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .wv-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(15, 16, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            z-index: 10;
+        }
+
+        .wv-nav-btn:hover {
+            border-color: var(--accent-lime);
+            background: var(--accent-lime);
+            color: #000000;
+            box-shadow: 0 0 20px rgba(168, 255, 83, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .wv-nav-btn.wv-prev { left: 1.5rem; }
+        .wv-nav-btn.wv-next { right: 1.5rem; }
+
+        /* Integrated Bottom Controls on Video Player */
+        .wv-player-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.6) 70%, transparent 100%);
+            padding: 1.5rem 1rem 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .wv-timeline-row {
+            width: 100%;
+        }
+
+        .wv-progress-wrap {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: height 0.15s;
+        }
+
+        .wv-progress-wrap:hover {
+            height: 9px;
+        }
+
+        .wv-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-lime);
+            box-shadow: 0 0 10px var(--accent-lime);
+            border-radius: 4px;
+            transition: width 0.08s linear;
+        }
+
+        .wv-ctrl-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .wv-ctrl-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wv-icon-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .wv-icon-btn:hover {
+            color: var(--accent-lime);
+            transform: scale(1.12);
+        }
+
+        .wv-time-display {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            color: #d0d0d8;
+        }
+
+        .wv-slow-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            color: #000000;
+            background: var(--accent-lime);
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        /* Bottom Filmstrip Carousel (All 9 Videos) */
+        .wv-filmstrip-row {
+            padding: 0.8rem 1.25rem 1rem;
+            background: rgba(6, 7, 10, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .wv-filmstrip-header {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .wv-filmstrip-count {
+            color: var(--accent-lime);
+            font-weight: 700;
+        }
+
+        .wv-filmstrip-track {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 4px 2px 8px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(168, 255, 83, 0.4) transparent;
+        }
+
+        .wv-filmstrip-track::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .wv-filmstrip-track::-webkit-scrollbar-thumb {
+            background: var(--accent-lime);
+            border-radius: 4px;
+        }
+
+        .wv-thumb-card {
+            flex-shrink: 0;
+            width: 72px;
+            aspect-ratio: 9/16;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #08090d;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.25s;
+        }
+
+        .wv-thumb-card:hover {
+            border-color: rgba(168, 255, 83, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .wv-thumb-card.is-active {
+            border: 2px solid var(--accent-lime);
+            box-shadow: 0 0 15px rgba(168, 255, 83, 0.6);
+            transform: scale(1.04);
+        }
+
+        .wv-thumb-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .wv-thumb-idx {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: rgba(0, 0, 0, 0.85);
+            color: var(--accent-lime);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 1px 4px;
+            border-radius: 4px;
+            line-height: 1;
+        }
+
+        /* ===================================================
+           COOKIE CONSENT BANNER & FOOTER LINK
+        =================================================== */
+        .cookie-banner {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(140%);
+            width: calc(100% - 36px);
+            max-width: 860px;
+            z-index: 99999;
+            background: rgba(10, 11, 16, 0.94);
+            border: 1px solid rgba(168, 255, 83, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(168, 255, 83, 0.18);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        .cookie-banner.is-visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cookie-container {
+            padding: 1.35rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .cookie-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .cookie-icon-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 2px;
+        }
+
+        .cookie-emoji {
+            font-size: 1.15rem;
+        }
+
+        .cookie-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--accent-lime);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .cookie-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .cookie-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        .cookie-link {
+            color: var(--accent-lime);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+        }
+
+        .cookie-link:hover {
+            color: #ffffff;
+        }
+
+        .cookie-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .cookie-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1.4rem;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-transform: uppercase;
+            outline: none;
+        }
+
+        .cookie-accept {
+            background: var(--accent-lime);
+            color: #000000;
+            border: 1px solid var(--accent-lime);
+            box-shadow: 0 0 18px rgba(168, 255, 83, 0.35);
+        }
+
+        .cookie-accept:hover {
+            background: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .cookie-essential {
+            background: rgba(255, 255, 255, 0.06);
+            color: #e0e0ea;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .cookie-essential:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .footer-cookie-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .footer-cookie-btn:hover {
+            border-color: var(--accent-lime);
+            color: var(--accent-lime);
+            background: rgba(168, 255, 83, 0.08);
+        }
+
+        @media (max-width: 768px) {
+            .wv-container {
+                height: 96vh;
+                border-radius: 14px;
+            }
+            .wv-topbar {
+                padding: 0.75rem 1rem;
+            }
+            .wv-top-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .wv-heading {
+                font-size: 0.95rem;
+            }
+            .wv-nav-btn {
+                width: 38px;
+                height: 38px;
+            }
+            .wv-nav-btn.wv-prev { left: 0.5rem; }
+            .wv-nav-btn.wv-next { right: 0.5rem; }
+            .cookie-container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1.15rem 1.25rem;
+                gap: 1rem;
+            }
+            .cookie-right {
+                width: 100%;
+                flex-direction: column;
+            }
+            .cookie-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+
+        /* ===================================================
            ABOUT US & BRAND PHILOSOPHY SECTION
         =================================================== */
         .about-section {
@@ -4454,6 +5147,150 @@ template = """<!DOCTYPE html>
     </div>
 
     <!-- ==========================================
+         SELECTED WORK SHOWCASE MODAL (FULL VIEWER)
+    ========================================== -->
+    <div class="work-viewer-modal" id="work-viewer-modal" aria-hidden="true" role="dialog" aria-label="Selected Work Video Viewer">
+        <div class="wv-backdrop" id="wv-backdrop"></div>
+        <div class="wv-container">
+            
+            <!-- Top Bar -->
+            <div class="wv-topbar">
+                <div class="wv-meta">
+                    <span class="wv-tagline" id="wv-tag">[ PORTFOLIO ARCHITECTURE ]</span>
+                    <h3 class="wv-heading" id="wv-title">VIDEO 01 / 09 — Jagannath Travels Fleet</h3>
+                </div>
+                
+                <div class="wv-top-actions">
+                    <!-- Playback Speed (View each video slowly!) -->
+                    <div class="wv-speed-pills">
+                        <span class="wv-speed-label">SPEED:</span>
+                        <button class="wv-speed-btn" data-speed="0.5" title="View in 0.5x Slow Motion">0.5x Slow</button>
+                        <button class="wv-speed-btn" data-speed="0.75" title="View in 0.75x Relaxed">0.75x</button>
+                        <button class="wv-speed-btn is-active" data-speed="1.0" title="Normal 1.0x Speed">1.0x</button>
+                    </div>
+
+                    <button class="wv-close-btn" id="wv-close" title="Close Viewer (Esc)" aria-label="Close">✕</button>
+                </div>
+            </div>
+
+            <!-- Video Player Stage -->
+            <div class="wv-stage">
+                <button class="wv-nav-btn wv-prev" id="wv-prev" title="Previous Video (←)" aria-label="Previous">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                
+                <div class="wv-player-wrap">
+                    <video class="wv-video-element" id="wv-video" playsinline preload="auto"></video>
+                    
+                    <!-- Center Play Overlay Indicator -->
+                    <div class="wv-center-play" id="wv-center-play">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+
+                    <!-- Bottom Integrated Controls on Video -->
+                    <div class="wv-player-controls">
+                        <div class="wv-timeline-row">
+                            <div class="wv-progress-wrap" id="wv-progress-wrap" title="Scrub slowly through video">
+                                <div class="wv-progress-bar" id="wv-progress-bar"></div>
+                            </div>
+                        </div>
+                        <div class="wv-ctrl-bar">
+                            <div class="wv-ctrl-left">
+                                <button class="wv-icon-btn" id="wv-play-btn" title="Play/Pause (Space)">
+                                    <svg class="wv-play-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                    <svg class="wv-pause-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                                </button>
+                                <button class="wv-icon-btn" id="wv-sound-btn" title="Toggle Sound">
+                                    <svg class="wv-sound-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                                    <svg class="wv-sound-off" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                                </button>
+                                <span class="wv-time-display" id="wv-time-display">0:00 / 0:00</span>
+                            </div>
+                            <div class="wv-ctrl-right">
+                                <span class="wv-slow-badge" id="wv-slow-badge">1.0x NORMAL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="wv-nav-btn wv-next" id="wv-next" title="Next Video (→)" aria-label="Next">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
+
+            <!-- Bottom Filmstrip (All 9 Videos to browse slowly) -->
+            <div class="wv-filmstrip-row">
+                <div class="wv-filmstrip-header">
+                    <span>SELECT ANY VIDEO TO VIEW (ALL 9 WORKS):</span>
+                    <span class="wv-filmstrip-count">1 TO 9</span>
+                </div>
+                <div class="wv-filmstrip-track" id="wv-filmstrip-track">
+                    <button class="wv-thumb-card is-active" data-index="0" title="01 — Jagannath Travels Fleet">
+                        <img src="work%20videos/posters/work_poster_1.jpg" alt="Work 01" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">01</span>
+                    </button>
+                    <button class="wv-thumb-card" data-index="1" title="02 — Kalpana Roadlines Volvo">
+                        <img src="work%20videos/posters/work_poster_2.jpg" alt="Work 02" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">02</span>
+                    </button>
+                    <button class="wv-thumb-card" data-index="2" title="03 — Commercial Cinematic">
+                        <img src="work%20videos/posters/work_poster_3.jpg" alt="Work 03" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">03</span>
+                    </button>
+                    <button class="wv-thumb-card" data-index="3" title="04 — High-Velocity Social Reel">
+                        <img src="work%20videos/posters/work_poster_4.jpg" alt="Work 04" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">04</span>
+                    </button>
+                    <button class="wv-thumb-card" data-index="4" title="05 — 4K Cinematography">
+                        <img src="work%20videos/posters/work_poster_5.jpg" alt="Work 05" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">05</span>
+                    </button>
+                    <button class="wv-thumb-card" data-index="5" title="06 — Lifestyle Campaign">
+                        <img src="work%20videos/posters/work_poster_6.jpg" alt="Work 06" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">06</span>
+                    </button>
+                    <button class="wv-thumb-card" data-index="6" title="07 — Fast Action Edit">
+                        <img src="work%20videos/posters/work_poster_7.jpg" alt="Work 07" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">07</span>
+                    </button>
+                    <button class="wv-thumb-card" data-index="7" title="08 — Ultra-HD Commercial Cut">
+                        <img src="work%20videos/posters/work_poster_8.jpg" alt="Work 08" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">08</span>
+                    </button>
+                    <button class="wv-thumb-card" data-index="8" title="09 — Malnad Stays Resort">
+                        <img src="work%20videos/posters/work_poster_9.jpg" alt="Work 09" class="wv-thumb-img">
+                        <span class="wv-thumb-idx">09</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================
+         COOKIE CONSENT & PRIVACY PREFERENCES
+    ========================================== -->
+    <div class="cookie-banner" id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie Preferences">
+        <div class="cookie-container">
+            <div class="cookie-left">
+                <div class="cookie-icon-pill">
+                    <span class="cookie-emoji">🍪</span>
+                    <span class="cookie-tag">PRIVACY &amp; COOKIES</span>
+                </div>
+                <h4 class="cookie-title">We value your browsing experience</h4>
+                <p class="cookie-text">
+                    Savkar Media uses cookies and local storage to preserve high-definition video playback speeds, ambient audio preferences, and fluid rendering. No intrusive third-party trackers. Read our <a href="terms.html" class="cookie-link">Terms &amp; Privacy Policy</a>.
+                </p>
+            </div>
+            <div class="cookie-right">
+                <button class="cookie-btn cookie-accept" id="cookie-accept-all">ACCEPT ALL</button>
+                <button class="cookie-btn cookie-essential" id="cookie-accept-essential">ESSENTIAL ONLY</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==========================================
          SELECTED WORK (AUTO MOVEMENT SLIDER)
     ========================================== -->
     <section class="work-section" id="work">
@@ -4463,6 +5300,12 @@ template = """<!DOCTYPE html>
                 <h2 class="section-headline">SELECTED WORK</h2>
             </div>
             <div class="slider-controls">
+                <button class="work-view-btn" id="open-work-viewer" title="Open full gallery to view each and every video slowly">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                    <span>VIEW ALL VIDEOS</span>
+                    <span class="work-count-badge">9</span>
+                </button>
+                <button class="slider-btn" id="slide-pause" title="Pause / Resume Continuous Movement">⏸</button>
                 <button class="slider-btn" id="slide-prev" title="Previous">←</button>
                 <button class="slider-btn" id="slide-next" title="Next">→</button>
             </div>
@@ -4472,8 +5315,14 @@ template = """<!DOCTYPE html>
         <div class="auto-slider-container" id="slider-container">
             <div class="auto-slider-track" id="slider-track">
                 <!-- Card 01: Jagannath Travels Reel -->
-                <div class="work-card">
+                <div class="work-card" data-index="0">
                     <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4481,8 +5330,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Card 02: Kalpana Roadlines Volvo -->
-                <div class="work-card">
+                <div class="work-card" data-index="1">
                     <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4490,8 +5345,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Card 03: Commercial Reel 1 -->
-                <div class="work-card">
+                <div class="work-card" data-index="2">
                     <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4499,8 +5360,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Card 04: Commercial Reel 2 -->
-                <div class="work-card">
+                <div class="work-card" data-index="3">
                     <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4508,8 +5375,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Card 05: Commercial Reel 3 -->
-                <div class="work-card">
+                <div class="work-card" data-index="4">
                     <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4517,8 +5390,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Card 06: Commercial Reel 4 -->
-                <div class="work-card">
+                <div class="work-card" data-index="5">
                     <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4526,8 +5405,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Card 07: Commercial Reel 5 -->
-                <div class="work-card">
+                <div class="work-card" data-index="6">
                     <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4535,8 +5420,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Card 08: Commercial Reel 6 -->
-                <div class="work-card">
+                <div class="work-card" data-index="7">
                     <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4544,8 +5435,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Card 09: Malnad Stays Long Weekend -->
-                <div class="work-card">
+                <div class="work-card" data-index="8">
                     <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4554,8 +5451,14 @@ template = """<!DOCTYPE html>
 
                 <!-- Seamless Loop Set -->
                 <!-- Duplicate Card 01: Jagannath Travels Reel (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="0">
                     <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4563,8 +5466,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Duplicate Card 02: Kalpana Roadlines Volvo (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="1">
                     <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4572,8 +5481,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Duplicate Card 03: Commercial Reel 1 (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="2">
                     <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4581,8 +5496,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Duplicate Card 04: Commercial Reel 2 (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="3">
                     <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4590,8 +5511,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Duplicate Card 05: Commercial Reel 3 (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="4">
                     <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4599,8 +5526,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Duplicate Card 06: Commercial Reel 4 (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="5">
                     <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4608,8 +5541,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Duplicate Card 07: Commercial Reel 5 (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="6">
                     <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4617,8 +5556,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Duplicate Card 08: Commercial Reel 6 (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="7">
                     <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -4626,8 +5571,14 @@ template = """<!DOCTYPE html>
                 </div>
 
                 <!-- Duplicate Card 09: Malnad Stays Long Weekend (Seamless Loop) -->
-                <div class="work-card">
+                <div class="work-card" data-index="8">
                     <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                                        <div class="work-card-view-overlay">
+                        <span class="work-view-pill">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            VIEW
+                        </span>
+                    </div>
                     <button class="work-sound-badge" aria-label="Toggle Audio" title="Toggle Audio">
                         <svg class="sound-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                         <svg class="sound-on-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -5620,6 +6571,10 @@ template = """<!DOCTYPE html>
                         <span>TERMS &amp; CONDITIONS (MOU)</span>
                         <span class="terms-nav-arrow">↗</span>
                     </a>
+                    <button id="reopen-cookie-banner" class="footer-cookie-btn" title="Manage Cookie Preferences">
+                        <span>🍪</span>
+                        <span>COOKIE SETTINGS</span>
+                    </button>
                 </div>
                 <div class="footer-copyright-col">© 2026 ALL RIGHTS RESERVED</div>
             </div>
@@ -5959,6 +6914,9 @@ template = """<!DOCTYPE html>
 
             // Step 1: Burst 22 temporary high-speed bills
             burstTemporaryCash(22);
+            if (typeof window.showCookieBanner === 'function') {
+                window.showCookieBanner();
+            }
 
             // Step 2: Make 3D zoom portal visible
             cashZoomPortal.style.opacity = '1';
@@ -6122,6 +7080,425 @@ template = """<!DOCTYPE html>
         });
 
     })();
+
+
+        
+        // ==========================================
+        // 6.1 SELECTED WORK SHOWCASE VIEWER & COOKIE SYSTEM
+        // ==========================================
+        (() => {
+        const track = document.getElementById('slider-track');
+        const WORK_VIDEOS_DATA = [
+            {
+                index: 0,
+                src: 'work%20videos/Jagannath%20travels%20reel.mp4',
+                poster: 'work%20videos/posters/work_poster_1.jpg',
+                tag: 'COMMERCIAL PRODUCTION',
+                title: 'Jagannath Travels Luxury Fleet',
+                desc: 'Commercial reel showcasing high-end luxury coach interior, ambient lighting, and highway cinematography.'
+            },
+            {
+                index: 1,
+                src: "work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4",
+                poster: 'work%20videos/posters/work_poster_2.jpg',
+                tag: 'COMMERCIAL AUTOMOTIVE',
+                title: 'Kalpana Roadlines Volvo Commercial',
+                desc: 'Heavy commercial automotive showcase featuring night driving, dynamic speed grading, and brand presence.'
+            },
+            {
+                index: 2,
+                src: 'work%20videos/lv_0_20260512171141.mp4',
+                poster: 'work%20videos/posters/work_poster_3.jpg',
+                tag: 'BRAND STORYTELLING',
+                title: 'Cinematic Visual Campaign',
+                desc: 'Dramatic color grading, cinematic transitions, and impactful audio design crafted for maximum retention.'
+            },
+            {
+                index: 3,
+                src: 'work%20videos/lv_0_20260605140912.mp4',
+                poster: 'work%20videos/posters/work_poster_4.jpg',
+                tag: 'VIRAL SOCIAL CAMPAIGN',
+                title: 'High-Velocity Social Reel',
+                desc: 'High-energy pacing and kinetic typography engineered to drive audience engagement and shares.'
+            },
+            {
+                index: 4,
+                src: 'work%20videos/lv_0_20260605141115.mp4',
+                poster: 'work%20videos/posters/work_poster_5.jpg',
+                tag: '4K CINEMATOGRAPHY',
+                title: 'Premium Visual Aesthetic',
+                desc: 'Crisp 4K framing, master studio lighting, and smooth gimbal movement designed to elevate brand authority.'
+            },
+            {
+                index: 5,
+                src: 'work%20videos/lv_0_20260610140842.mp4',
+                poster: 'work%20videos/posters/work_poster_6.jpg',
+                tag: 'LIFESTYLE &amp; PRODUCT',
+                title: 'Dynamic Creative Campaign',
+                desc: 'Vibrant visual storytelling tailored for modern digital consumers across Instagram and YouTube Shorts.'
+            },
+            {
+                index: 6,
+                src: 'work%20videos/lv_0_20260724183038.mp4',
+                poster: 'work%20videos/posters/work_poster_7.jpg',
+                tag: 'FAST-PACED ACTION',
+                title: 'Kinetic Rhythm &amp; Sound Design',
+                desc: 'Precision beat-synced cuts and deep bass impacts designed to capture viewer attention within the first 2 seconds.'
+            },
+            {
+                index: 7,
+                src: 'work%20videos/lv_0_20260724183116.mp4',
+                poster: 'work%20videos/posters/work_poster_8.jpg',
+                tag: 'COMMERCIAL EDITING',
+                title: 'Ultra-HD Commercial Cut',
+                desc: 'Sophisticated post-production color balance and editorial precision built for discerning premium brands.'
+            },
+            {
+                index: 8,
+                src: 'work%20videos/Malnad%20stays%20long%20weekend.mp4',
+                poster: 'work%20videos/posters/work_poster_9.jpg',
+                tag: 'HOSPITALITY &amp; RESORT',
+                title: 'Malnad Stays Luxury Resort',
+                desc: 'Sensory escape reel highlighting serene nature views, resort villas, and peaceful weekend getaways.'
+            }
+        ];
+
+        let currentWorkIndex = 0;
+        let currentWorkSpeed = 1.0;
+        let isMarqueePaused = false;
+
+        const workModal = document.getElementById('work-viewer-modal');
+        const wvBackdrop = document.getElementById('wv-backdrop');
+        const wvCloseBtn = document.getElementById('wv-close');
+        const wvVideo = document.getElementById('wv-video');
+        const wvTag = document.getElementById('wv-tag');
+        const wvTitle = document.getElementById('wv-title');
+        const wvPrevBtn = document.getElementById('wv-prev');
+        const wvNextBtn = document.getElementById('wv-next');
+        const wvPlayBtn = document.getElementById('wv-play-btn');
+        const wvPlayIcon = wvPlayBtn ? wvPlayBtn.querySelector('.wv-play-icon') : null;
+        const wvPauseIcon = wvPlayBtn ? wvPlayBtn.querySelector('.wv-pause-icon') : null;
+        const wvSoundBtn = document.getElementById('wv-sound-btn');
+        const wvSoundOn = wvSoundBtn ? wvSoundBtn.querySelector('.wv-sound-on') : null;
+        const wvSoundOff = wvSoundBtn ? wvSoundBtn.querySelector('.wv-sound-off') : null;
+        const wvProgressBar = document.getElementById('wv-progress-bar');
+        const wvProgressWrap = document.getElementById('wv-progress-wrap');
+        const wvTimeDisplay = document.getElementById('wv-time-display');
+        const wvCenterPlay = document.getElementById('wv-center-play');
+        const wvSlowBadge = document.getElementById('wv-slow-badge');
+        const speedButtons = document.querySelectorAll('.wv-speed-btn');
+        const filmstripThumbs = document.querySelectorAll('.wv-thumb-card');
+        const openWorkViewerBtn = document.getElementById('open-work-viewer');
+        const slidePauseBtn = document.getElementById('slide-pause');
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function setWorkSpeed(speed) {
+            currentWorkSpeed = speed;
+            if (wvVideo) {
+                wvVideo.playbackRate = speed;
+            }
+            speedButtons.forEach(btn => {
+                if (parseFloat(btn.getAttribute('data-speed')) === speed) {
+                    btn.classList.add('is-active');
+                } else {
+                    btn.classList.remove('is-active');
+                }
+            });
+            if (wvSlowBadge) {
+                if (speed === 0.5) {
+                    wvSlowBadge.textContent = '0.5x SLOW MOTION';
+                    wvSlowBadge.style.background = '#a8ff53';
+                    wvSlowBadge.style.color = '#000000';
+                } else if (speed === 0.75) {
+                    wvSlowBadge.textContent = '0.75x RELAXED';
+                    wvSlowBadge.style.background = '#a8ff53';
+                    wvSlowBadge.style.color = '#000000';
+                } else {
+                    wvSlowBadge.textContent = '1.0x NORMAL';
+                    wvSlowBadge.style.background = 'rgba(255, 255, 255, 0.15)';
+                    wvSlowBadge.style.color = '#ffffff';
+                }
+            }
+        }
+
+        speedButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const sp = parseFloat(btn.getAttribute('data-speed'));
+                setWorkSpeed(sp);
+            });
+        });
+
+        function loadWorkVideo(index) {
+            if (index < 0) index = WORK_VIDEOS_DATA.length - 1;
+            if (index >= WORK_VIDEOS_DATA.length) index = 0;
+            currentWorkIndex = index;
+            const data = WORK_VIDEOS_DATA[index];
+
+            if (wvTag) wvTag.innerHTML = `[ ${data.tag} ]`;
+            if (wvTitle) wvTitle.textContent = `VIDEO 0${index + 1} / 09 — ${data.title}`;
+
+            if (wvVideo) {
+                wvVideo.src = data.src;
+                wvVideo.poster = data.poster;
+                wvVideo.playbackRate = currentWorkSpeed;
+                wvVideo.muted = false; // with sound
+                
+                // Mute all other background page videos
+                document.querySelectorAll('video').forEach(v => {
+                    if (v !== wvVideo) {
+                        v.muted = true;
+                    }
+                });
+
+                wvVideo.play().then(() => {
+                    if (wvPlayIcon) wvPlayIcon.style.display = 'none';
+                    if (wvPauseIcon) wvPauseIcon.style.display = 'block';
+                    if (wvCenterPlay) wvCenterPlay.classList.remove('is-visible');
+                }).catch(() => {
+                    // Autoplay policy fallback: mute and play
+                    wvVideo.muted = true;
+                    wvVideo.play().catch(() => {});
+                    if (wvSoundOn) wvSoundOn.style.display = 'none';
+                    if (wvSoundOff) wvSoundOff.style.display = 'block';
+                });
+            }
+
+            // Update filmstrip highlight
+            filmstripThumbs.forEach((thumb, idx) => {
+                if (idx === index) {
+                    thumb.classList.add('is-active');
+                    thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } else {
+                    thumb.classList.remove('is-active');
+                }
+            });
+        }
+
+        function openWorkViewer(index = 0) {
+            if (!workModal) return;
+            workModal.classList.add('is-active');
+            workModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            // Pause slider animation while viewer is open
+            if (track) {
+                track.style.animationPlayState = 'paused';
+            }
+
+            loadWorkVideo(index);
+        }
+
+        function closeWorkViewer() {
+            if (!workModal) return;
+            workModal.classList.remove('is-active');
+            workModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+
+            if (wvVideo) {
+                wvVideo.pause();
+                wvVideo.src = '';
+            }
+
+            // Resume marquee if it wasn't explicitly paused by user
+            if (track && !isMarqueePaused) {
+                track.style.animationPlayState = 'running';
+            }
+        }
+
+        if (openWorkViewerBtn) {
+            openWorkViewerBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openWorkViewer(0);
+            });
+        }
+
+        if (wvCloseBtn) wvCloseBtn.addEventListener('click', closeWorkViewer);
+        if (wvBackdrop) wvBackdrop.addEventListener('click', closeWorkViewer);
+
+        if (wvPrevBtn) {
+            wvPrevBtn.addEventListener('click', () => {
+                loadWorkVideo(currentWorkIndex - 1);
+            });
+        }
+
+        if (wvNextBtn) {
+            wvNextBtn.addEventListener('click', () => {
+                loadWorkVideo(currentWorkIndex + 1);
+            });
+        }
+
+        // Filmstrip click
+        filmstripThumbs.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                const idx = parseInt(thumb.getAttribute('data-index'), 10);
+                loadWorkVideo(idx);
+            });
+        });
+
+        // Work cards in the marquee track: clicking card opens viewer
+        const sliderCards = document.querySelectorAll('.auto-slider-track .work-card');
+        sliderCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                // If user clicked directly on sound badge, do not open modal
+                if (e.target.closest('.work-sound-badge')) return;
+                const idx = parseInt(card.getAttribute('data-index') || '0', 10);
+                openWorkViewer(idx);
+            });
+        });
+
+        // Video Play/Pause toggle
+        function toggleWorkPlay() {
+            if (!wvVideo) return;
+            if (wvVideo.paused) {
+                wvVideo.play();
+                if (wvPlayIcon) wvPlayIcon.style.display = 'none';
+                if (wvPauseIcon) wvPauseIcon.style.display = 'block';
+                if (wvCenterPlay) wvCenterPlay.classList.remove('is-visible');
+            } else {
+                wvVideo.pause();
+                if (wvPlayIcon) wvPlayIcon.style.display = 'block';
+                if (wvPauseIcon) wvPauseIcon.style.display = 'none';
+                if (wvCenterPlay) wvCenterPlay.classList.add('is-visible');
+            }
+        }
+
+        if (wvPlayBtn) wvPlayBtn.addEventListener('click', toggleWorkPlay);
+        if (wvVideo) wvVideo.addEventListener('click', toggleWorkPlay);
+
+        // Sound toggle in modal
+        if (wvSoundBtn) {
+            wvSoundBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!wvVideo) return;
+                wvVideo.muted = !wvVideo.muted;
+                if (wvVideo.muted) {
+                    if (wvSoundOn) wvSoundOn.style.display = 'none';
+                    if (wvSoundOff) wvSoundOff.style.display = 'block';
+                } else {
+                    if (wvSoundOn) wvSoundOn.style.display = 'block';
+                    if (wvSoundOff) wvSoundOff.style.display = 'none';
+                }
+            });
+        }
+
+        // Progress bar updates
+        if (wvVideo) {
+            wvVideo.addEventListener('timeupdate', () => {
+                if (!wvVideo.duration) return;
+                const pct = (wvVideo.currentTime / wvVideo.duration) * 100;
+                if (wvProgressBar) wvProgressBar.style.width = `${pct}%`;
+                if (wvTimeDisplay) {
+                    wvTimeDisplay.textContent = `${formatTime(wvVideo.currentTime)} / ${formatTime(wvVideo.duration)}`;
+                }
+            });
+
+            wvVideo.addEventListener('ended', () => {
+                // Smoothly proceed to next work video
+                loadWorkVideo(currentWorkIndex + 1);
+            });
+        }
+
+        // Scrubber click & drag
+        if (wvProgressWrap) {
+            wvProgressWrap.addEventListener('click', (e) => {
+                if (!wvVideo || !wvVideo.duration) return;
+                const rect = wvProgressWrap.getBoundingClientRect();
+                const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                wvVideo.currentTime = pos * wvVideo.duration;
+            });
+        }
+
+        // Marquee Pause/Resume Button
+        if (slidePauseBtn && track) {
+            slidePauseBtn.addEventListener('click', () => {
+                isMarqueePaused = !isMarqueePaused;
+                if (isMarqueePaused) {
+                    track.style.animationPlayState = 'paused';
+                    slidePauseBtn.textContent = '▶';
+                    slidePauseBtn.title = 'Resume Continuous Movement';
+                    slidePauseBtn.style.borderColor = 'var(--accent-lime)';
+                    slidePauseBtn.style.color = 'var(--accent-lime)';
+                } else {
+                    track.style.animationPlayState = 'running';
+                    slidePauseBtn.textContent = '⏸';
+                    slidePauseBtn.title = 'Pause Continuous Movement';
+                    slidePauseBtn.style.borderColor = '';
+                    slidePauseBtn.style.color = '';
+                }
+            });
+        }
+
+        // Keyboard listeners for modal
+        window.addEventListener('keydown', (e) => {
+            if (!workModal || !workModal.classList.contains('is-active')) return;
+            if (e.key === 'Escape') {
+                closeWorkViewer();
+            } else if (e.key === 'ArrowLeft') {
+                loadWorkVideo(currentWorkIndex - 1);
+            } else if (e.key === 'ArrowRight') {
+                loadWorkVideo(currentWorkIndex + 1);
+            } else if (e.key === ' ' || e.code === 'Space') {
+                e.preventDefault();
+                toggleWorkPlay();
+            }
+        });
+
+        // ==========================================
+        // 6.2 COOKIE CONSENT BANNER SYSTEM
+        // ==========================================
+        function initCookieConsent() {
+            const banner = document.getElementById('cookie-banner');
+            const acceptAll = document.getElementById('cookie-accept-all');
+            const acceptEssential = document.getElementById('cookie-accept-essential');
+            const reopenBtn = document.getElementById('reopen-cookie-banner');
+
+            if (!banner) return;
+
+            window.showCookieBanner = function() {
+                const consent = localStorage.getItem('savkar_cookie_consent');
+                if (!consent) {
+                    setTimeout(() => {
+                        banner.classList.add('is-visible');
+                    }, 1200);
+                }
+            };
+
+            // If already transitioned or no intro present
+            if (typeof isTransitioned !== 'undefined' && isTransitioned) {
+                window.showCookieBanner();
+            }
+
+            if (acceptAll) {
+                acceptAll.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.setItem('savkar_cookie_consent', 'accepted');
+                    banner.classList.remove('is-visible');
+                });
+            }
+
+            if (acceptEssential) {
+                acceptEssential.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.setItem('savkar_cookie_consent', 'essential');
+                    banner.classList.remove('is-visible');
+                });
+            }
+
+            if (reopenBtn) {
+                reopenBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    banner.classList.add('is-visible');
+                });
+            }
+        }
+        initCookieConsent();
+        })();
 
 
         // ==========================================
