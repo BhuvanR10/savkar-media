@@ -12,6 +12,9 @@ with open(os.path.join(assets_dir, 'real_dollar.png'), 'rb') as f:
 with open(os.path.join(assets_dir, 'real_dollar_cursor.png'), 'rb') as f:
     cursor_b64 = 'data:image/png;base64,' + base64.b64encode(f.read()).decode('ascii')
 
+with open(os.path.join(assets_dir, 'savkar_logo_texture_512.png'), 'rb') as f:
+    logo_texture_b64 = 'data:image/png;base64,' + base64.b64encode(f.read()).decode('ascii')
+
 template = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4815,7 +4818,7 @@ template = """<!DOCTYPE html>
             
             <!-- Reel 1: REEL 1.mp4 -->
             <div class="reel-tile" data-index="0" data-video="videos/REEL%201.mp4" data-tag="VIRAL HOOK" data-title="What If Your Brand Had Real Engagement?" data-caption="Mastering the 3-second hook to turn casual scrollers into paying clients.">
-                <video class="reel-video" src="videos/REEL%201.mp4" poster="videos/posters/poster_1.jpg" preload="metadata" playsinline loop muted></video>
+                <video class="reel-video" src="videos/REEL%201.mp4" poster="videos/posters/poster_1.jpg" preload="none" playsinline loop muted></video>
                 <div class="reel-overlay">
                     <div class="reel-top-bar">
                         <span class="reel-tag">VIRAL HOOK</span>
@@ -4851,7 +4854,7 @@ template = """<!DOCTYPE html>
 
             <!-- Reel 2: REELS 2.mp4 -->
             <div class="reel-tile" data-index="1" data-video="videos/REELS%202.mp4" data-tag="BRAND STORY" data-title="Struggling With Reach? We Fix It" data-caption="Relatable Kannada &amp; English storytelling tailored for Bengaluru businesses.">
-                <video class="reel-video" src="videos/REELS%202.mp4" poster="videos/posters/poster_2.jpg" preload="metadata" playsinline loop muted></video>
+                <video class="reel-video" src="videos/REELS%202.mp4" poster="videos/posters/poster_2.jpg" preload="none" playsinline loop muted></video>
                 <div class="reel-overlay">
                     <div class="reel-top-bar">
                         <span class="reel-tag">BRAND STORY</span>
@@ -4887,7 +4890,7 @@ template = """<!DOCTYPE html>
 
             <!-- Reel 3: REELS 3.mp4 -->
             <div class="reel-tile" data-index="2" data-video="videos/REELS%203.mp4" data-tag="MARKET STRATEGY" data-title="Why Most Agency Ads Fail in 2026" data-caption="High-converting creative direction vs traditional boring marketing campaigns.">
-                <video class="reel-video" src="videos/REELS%203.mp4" poster="videos/posters/poster_3.jpg" preload="metadata" playsinline loop muted></video>
+                <video class="reel-video" src="videos/REELS%203.mp4" poster="videos/posters/poster_3.jpg" preload="none" playsinline loop muted></video>
                 <div class="reel-overlay">
                     <div class="reel-top-bar">
                         <span class="reel-tag">MARKET STRATEGY</span>
@@ -4923,7 +4926,7 @@ template = """<!DOCTYPE html>
 
             <!-- Reel 4: Copy of REELS 7.mp4 -->
             <div class="reel-tile" data-index="3" data-video="videos/Copy%20of%20REELS%207.mp4" data-tag="LOCAL BUSINESS" data-title="Just Opened Your Business? Watch This" data-caption="The proven blueprint for Gyms, Cafes &amp; Clinics to pack their doors with leads.">
-                <video class="reel-video" src="videos/Copy%20of%20REELS%207.mp4" poster="videos/posters/poster_4.jpg" preload="metadata" playsinline loop muted></video>
+                <video class="reel-video" src="videos/Copy%20of%20REELS%207.mp4" poster="videos/posters/poster_4.jpg" preload="none" playsinline loop muted></video>
                 <div class="reel-overlay">
                     <div class="reel-top-bar">
                         <span class="reel-tag">LOCAL BUSINESS</span>
@@ -4959,7 +4962,7 @@ template = """<!DOCTYPE html>
 
             <!-- Reel 5: Copy of REELS 2.mp4 -->
             <div class="reel-tile" data-index="4" data-video="videos/Copy%20of%20REELS%202.mp4" data-tag="CASE STUDY" data-title="How We Scaled A Client's Lead Pipeline" data-caption="Rapid audience growth &amp; booked consultations through high-intent paid reels.">
-                <video class="reel-video" src="videos/Copy%20of%20REELS%202.mp4" poster="videos/posters/poster_5.jpg" preload="metadata" playsinline loop muted></video>
+                <video class="reel-video" src="videos/Copy%20of%20REELS%202.mp4" poster="videos/posters/poster_5.jpg" preload="none" playsinline loop muted></video>
                 <div class="reel-overlay">
                     <div class="reel-top-bar">
                         <span class="reel-tag">CASE STUDY</span>
@@ -4995,7 +4998,7 @@ template = """<!DOCTYPE html>
 
             <!-- Reel 6: lv_0_20260315161236.mp4 -->
             <div class="reel-tile" data-index="5" data-video="videos/lv_0_20260315161236.mp4" data-tag="ORGANIC GROWTH" data-title="Building Real Authority On Instagram" data-caption="Why founder-led personal brand presence outperforms generic graphic templates.">
-                <video class="reel-video" src="videos/lv_0_20260315161236.mp4" poster="videos/posters/poster_6.jpg" preload="metadata" playsinline loop muted></video>
+                <video class="reel-video" src="videos/lv_0_20260315161236.mp4" poster="videos/posters/poster_6.jpg" preload="none" playsinline loop muted></video>
                 <div class="reel-overlay">
                     <div class="reel-top-bar">
                         <span class="reel-tag">ORGANIC GROWTH</span>
@@ -5031,7 +5034,7 @@ template = """<!DOCTYPE html>
 
             <!-- Reel 7: lv_0_20260225191249.mp4 -->
             <div class="reel-tile" data-index="6" data-video="videos/lv_0_20260225191249.mp4" data-tag="AGENCY BLUEPRINT" data-title="Strategy — What We Do Best" data-caption="End-to-end scripting, shooting, editing, and distribution under one roof.">
-                <video class="reel-video" src="videos/lv_0_20260225191249.mp4" poster="videos/posters/poster_7.jpg" preload="metadata" playsinline loop muted></video>
+                <video class="reel-video" src="videos/lv_0_20260225191249.mp4" poster="videos/posters/poster_7.jpg" preload="none" playsinline loop muted></video>
                 <div class="reel-overlay">
                     <div class="reel-top-bar">
                         <span class="reel-tag">AGENCY BLUEPRINT</span>
@@ -5067,7 +5070,7 @@ template = """<!DOCTYPE html>
 
             <!-- Reel 8: lv_0_20260225190002.mp4 -->
             <div class="reel-tile" data-index="7" data-video="videos/lv_0_20260225190002.mp4" data-tag="BEHIND THE SCENES" data-title="On-Location 4K Shoot in Action" data-caption="Pro filming on location with cinema stabilization &amp; luxury brand aesthetic.">
-                <video class="reel-video" src="videos/lv_0_20260225190002.mp4" poster="videos/posters/poster_8.jpg" preload="metadata" playsinline loop muted></video>
+                <video class="reel-video" src="videos/lv_0_20260225190002.mp4" poster="videos/posters/poster_8.jpg" preload="none" playsinline loop muted></video>
                 <div class="reel-overlay">
                     <div class="reel-top-bar">
                         <span class="reel-tag">BEHIND THE SCENES</span>
@@ -5180,7 +5183,7 @@ template = """<!DOCTYPE html>
                 </button>
                 
                 <div class="wv-player-wrap">
-                    <video class="wv-video-element" id="wv-video" playsinline preload="auto"></video>
+                    <video class="wv-video-element" id="wv-video" playsinline preload="none"></video>
                     
                     <!-- Center Play Overlay Indicator -->
                     <div class="wv-center-play" id="wv-center-play">
@@ -5316,7 +5319,7 @@ template = """<!DOCTYPE html>
             <div class="auto-slider-track" id="slider-track">
                 <!-- Card 01: Jagannath Travels Reel -->
                 <div class="work-card" data-index="0">
-                    <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5331,7 +5334,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 02: Kalpana Roadlines Volvo -->
                 <div class="work-card" data-index="1">
-                    <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5346,7 +5349,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 03: Commercial Reel 1 -->
                 <div class="work-card" data-index="2">
-                    <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5361,7 +5364,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 04: Commercial Reel 2 -->
                 <div class="work-card" data-index="3">
-                    <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5376,7 +5379,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 05: Commercial Reel 3 -->
                 <div class="work-card" data-index="4">
-                    <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5391,7 +5394,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 06: Commercial Reel 4 -->
                 <div class="work-card" data-index="5">
-                    <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5406,7 +5409,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 07: Commercial Reel 5 -->
                 <div class="work-card" data-index="6">
-                    <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5421,7 +5424,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 08: Commercial Reel 6 -->
                 <div class="work-card" data-index="7">
-                    <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5436,7 +5439,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Card 09: Malnad Stays Long Weekend -->
                 <div class="work-card" data-index="8">
-                    <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5452,7 +5455,7 @@ template = """<!DOCTYPE html>
                 <!-- Seamless Loop Set -->
                 <!-- Duplicate Card 01: Jagannath Travels Reel (Seamless Loop) -->
                 <div class="work-card" data-index="0">
-                    <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/Jagannath%20travels%20reel.mp4" poster="work%20videos/posters/work_poster_1.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5467,7 +5470,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 02: Kalpana Roadlines Volvo (Seamless Loop) -->
                 <div class="work-card" data-index="1">
-                    <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/Kalpana%20Roadlines%27s%20Volvo.mp4" poster="work%20videos/posters/work_poster_2.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5482,7 +5485,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 03: Commercial Reel 1 (Seamless Loop) -->
                 <div class="work-card" data-index="2">
-                    <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260512171141.mp4" poster="work%20videos/posters/work_poster_3.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5497,7 +5500,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 04: Commercial Reel 2 (Seamless Loop) -->
                 <div class="work-card" data-index="3">
-                    <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260605140912.mp4" poster="work%20videos/posters/work_poster_4.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5512,7 +5515,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 05: Commercial Reel 3 (Seamless Loop) -->
                 <div class="work-card" data-index="4">
-                    <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260605141115.mp4" poster="work%20videos/posters/work_poster_5.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5527,7 +5530,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 06: Commercial Reel 4 (Seamless Loop) -->
                 <div class="work-card" data-index="5">
-                    <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260610140842.mp4" poster="work%20videos/posters/work_poster_6.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5542,7 +5545,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 07: Commercial Reel 5 (Seamless Loop) -->
                 <div class="work-card" data-index="6">
-                    <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260724183038.mp4" poster="work%20videos/posters/work_poster_7.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5557,7 +5560,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 08: Commercial Reel 6 (Seamless Loop) -->
                 <div class="work-card" data-index="7">
-                    <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/lv_0_20260724183116.mp4" poster="work%20videos/posters/work_poster_8.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -5572,7 +5575,7 @@ template = """<!DOCTYPE html>
 
                 <!-- Duplicate Card 09: Malnad Stays Long Weekend (Seamless Loop) -->
                 <div class="work-card" data-index="8">
-                    <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" autoplay muted loop playsinline preload="metadata"></video>
+                    <video class="work-video" src="work%20videos/Malnad%20stays%20long%20weekend.mp4" poster="work%20videos/posters/work_poster_9.jpg" muted loop playsinline preload="none"></video>
                                         <div class="work-card-view-overlay">
                         <span class="work-view-pill">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -6525,16 +6528,24 @@ template = """<!DOCTYPE html>
                                 </div>
                                 <div class="form-group">
                                     <label>Service Needed</label>
-                                    <select id="form-service" class="form-select">
-                                        <option value="Reel Production & Content">Reel Production & Content</option>
-                                        <option value="Social Media Marketing">Social Media Marketing</option>
+                                    <select id="form-service" class="form-select" onchange="handleServiceSelectChange(this)">
+                                        <option value="Social Media Management">Social Media Management</option>
+                                        <option value="Reel Creation">Reel Creation</option>
+                                        <option value="Photography">Photography</option>
+                                        <option value="Videography">Videography</option>
+                                        <option value="Drone Shoots">Drone Shoots</option>
+                                        <option value="Graphic Design">Graphic Design</option>
+                                        <option value="Content Planning">Content Planning</option>
+                                        <option value="Brand Strategy">Brand Strategy</option>
+                                        <option value="Advertising Campaigns">Advertising Campaigns</option>
                                         <option value="Web Development">Web Development</option>
-                                        <option value="Custom Software: Gym Management">Custom Software: Gym Management</option>
-                                        <option value="Custom Software: Clinic & EMR">Custom Software: Clinic & Healthcare</option>
-                                        <option value="Custom Software: Cafe POS">Custom Software: Cafe Management & POS</option>
-                                        <option value="Custom Software: Restaurant POS">Custom Software: Restaurant POS</option>
-                                        <option value="Full Branding & Ads">Full Branding & Performance Ads</option>
+                                        <option value="Custom Software">Custom Software</option>
+                                        <option value="Other Services">Other Services: _______________________________</option>
                                     </select>
+                                    <div id="other-service-wrap" style="display: none; margin-top: 8px;">
+                                        <label style="font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #a8ff53; letter-spacing: 0.08em; text-transform: uppercase;">Other Services Specification</label>
+                                        <input type="text" id="form-service-other" class="form-input" placeholder="Specify your other service requirements..." style="border-color: rgba(168, 255, 83, 0.6);">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Package Tier</label>
@@ -6603,12 +6614,28 @@ template = """<!DOCTYPE html>
         }
         requestAnimationFrame(raf);
 
-        // Form Submission to WhatsApp
+        // Form Service Select Change & WhatsApp Submission
+        window.handleServiceSelectChange = function(sel) {
+            const wrap = document.getElementById('other-service-wrap');
+            const input = document.getElementById('form-service-other');
+            if (!wrap) return;
+            if (sel.value === 'Other Services' || sel.value.includes('Other Services')) {
+                wrap.style.display = 'block';
+                if (input) input.focus();
+            } else {
+                wrap.style.display = 'none';
+            }
+        };
+
         window.handleInquirySubmit = function(e) {
             e.preventDefault();
             const name = document.getElementById('form-name').value;
             const business = document.getElementById('form-business').value;
-            const service = document.getElementById('form-service').value;
+            let service = document.getElementById('form-service').value;
+            if (service === 'Other Services' || service.includes('Other Services')) {
+                const customOther = document.getElementById('form-service-other') ? document.getElementById('form-service-other').value.trim() : '';
+                service = customOther ? `Other Services: ${customOther}` : 'Other Services';
+            }
             const packageTier = document.getElementById('form-package').value;
             const msg = document.getElementById('form-message').value;
 
@@ -6797,7 +6824,7 @@ template = """<!DOCTYPE html>
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         const textureLoader = new THREE.TextureLoader();
-        const logoTexture = textureLoader.load('___LOGO_B64___', (tex) => {
+        const logoTexture = textureLoader.load('___LOGO_TEXTURE_B64___', (tex) => {
             tex.needsUpdate = true;
             if (typeof material !== 'undefined' && material) {
                 material.needsUpdate = true;
@@ -6849,7 +6876,7 @@ template = """<!DOCTYPE html>
             }
         `;
 
-        const getLiquidScale = () => (window.innerWidth <= 768 ? 1.35 : 1.12);
+        const getLiquidScale = () => (window.innerWidth <= 768 ? 1.45 : 1.12);
 
         const uniforms = {
             u_time: { value: 0 },
@@ -10941,7 +10968,7 @@ terms_template = """<!DOCTYPE html>
 </html>
 """
 
-final_html = template.replace('___LOGO_B64___', 'assets/savkar_logo_circle.png').replace('___DOLLAR_B64___', 'assets/real_dollar.png').replace('___CURSOR_B64___', 'assets/real_dollar_cursor.png')
+final_html = template.replace('___LOGO_B64___', 'assets/savkar_logo_circle.png').replace('___DOLLAR_B64___', 'assets/real_dollar.png').replace('___CURSOR_B64___', 'assets/real_dollar_cursor.png').replace('___LOGO_TEXTURE_B64___', logo_texture_b64)
 
 with open(os.path.join('website', 'index.html'), 'w', encoding='utf-8') as f:
     f.write(final_html)
