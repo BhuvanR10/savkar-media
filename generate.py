@@ -17,9 +17,11 @@ template = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAVKAR MEDIA — Radical Digital Growth, Web & Custom Software</title>
-    <meta name="description" content="Savkar Media — Digital Marketing Agency in Bengaluru. Fueling business growth with powerful content, viral reels, web development & custom software.">
+    <title>SAVKAR MEDIA &mdash; Radical Digital Growth, Web &amp; Custom Software</title>
+    <meta name="description" content="Savkar Media &mdash; Digital Marketing Agency in Bengaluru. Fueling business growth with powerful content, viral reels, web development &amp; custom software.">
     <link rel="icon" type="image/png" href="___LOGO_B64___">
+    <link rel="preload" as="image" href="___LOGO_B64___">
+    <link rel="preload" as="image" href="___DOLLAR_B64___">
 
     <!-- Fonts: Syne + Space Mono + Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +31,6 @@ template = """<!DOCTYPE html>
     <!-- Libraries: Three.js + GSAP + Lenis -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
     <style>
@@ -5841,7 +5842,12 @@ template = """<!DOCTYPE html>
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         const textureLoader = new THREE.TextureLoader();
-        const logoTexture = textureLoader.load('___LOGO_B64___');
+        const logoTexture = textureLoader.load('___LOGO_B64___', (tex) => {
+            tex.needsUpdate = true;
+            if (typeof material !== 'undefined' && material) {
+                material.needsUpdate = true;
+            }
+        });
         logoTexture.generateMipmaps = true;
         logoTexture.minFilter = THREE.LinearMipMapLinearFilter;
         logoTexture.magFilter = THREE.LinearFilter;
@@ -9558,16 +9564,16 @@ terms_template = """<!DOCTYPE html>
 </html>
 """
 
-final_html = template.replace('___LOGO_B64___', logo_b64).replace('___DOLLAR_B64___', dollar_b64).replace('___CURSOR_B64___', cursor_b64)
+final_html = template.replace('___LOGO_B64___', 'assets/savkar_logo_circle.png').replace('___DOLLAR_B64___', 'assets/real_dollar.png').replace('___CURSOR_B64___', 'assets/real_dollar_cursor.png')
 
 with open(os.path.join('website', 'index.html'), 'w', encoding='utf-8') as f:
     f.write(final_html)
 
-final_terms_html = terms_template.replace('___LOGO_B64___', logo_b64)
+final_terms_html = terms_template.replace('___LOGO_B64___', 'assets/savkar_logo_circle.png')
 with open(os.path.join('website', 'terms.html'), 'w', encoding='utf-8') as f:
     f.write(final_terms_html)
 
-final_web_clients_html = web_clients_template.replace('___LOGO_B64___', logo_b64)
+final_web_clients_html = web_clients_template.replace('___LOGO_B64___', 'assets/savkar_logo_circle.png')
 with open(os.path.join('website', 'web-clients.html'), 'w', encoding='utf-8') as f:
     f.write(final_web_clients_html)
 
