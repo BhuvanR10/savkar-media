@@ -6102,7 +6102,7 @@ template = """<!DOCTYPE html>
                     </div>
 
                     <div class="callout-header-cta-wrap">
-                        <a href="web-clients.html" class="clients-showcase-btn" title="View Our Web Development Clients &amp; Live Works">
+                        <a href="https://vion-five.vercel.app/" target="_blank" rel="noopener noreferrer" class="clients-showcase-btn" title="View Our Web Development Clients &amp; Live Works">
                             <div class="showcase-btn-top">
                                 <span class="showcase-live-dot"></span>
                                 <span class="showcase-pill-tag">CLIENT PORTFOLIO</span>
